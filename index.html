@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome My Lovely Baby @Nicole ❤️</title>
+    <style>
+        :root {
+            --card-bg: rgba(22, 27, 38, 0.90);
+            --accent-pink: #ff4b72;
+            --accent-gold: #ffd166;
+            --text-color: #f8f9fa;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(rgba(13, 15, 24, 0.75), rgba(13, 15, 24, 0.85)), 
+                        url('https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=1000&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            overflow-y: auto;
+            padding: 20px 15px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 550px;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.7);
+            text-align: center;
+            position: relative;
+            margin: 20px auto;
+        }
+
+        h1.main-header {
+            font-size: 1.6rem;
+            color: var(--accent-pink);
+            margin-bottom: 5px;
+            line-height: 1.3;
+        }
+
+        .sub-header {
+            font-size: 0.95rem;
+            color: var(--accent-gold);
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+
+        p {
+            font-size: 1rem;
+            color: #a0aec0;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            border: 2px solid #2d3748;
+            background: #0f131c;
+            color: #fff;
+            font-size: 1.1rem;
+            text-align: center;
+            margin-bottom: 20px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--accent-pink);
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(135deg, #ff4b72, #ff758c);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 75, 114, 0.4);
+        }
+
+        .error-msg {
+            color: #e53e3e;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Scratch Card Box */
+        .scratch-container {
+            position: relative;
+            width: 100%;
+            height: 320px;
+            margin-top: 15px;
+            margin-bottom: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+            background: linear-gradient(135deg, #1c0b2b, #2d0d3d);
+            border: 1px solid rgba(255, 75, 114, 0.3);
+        }
+
+        .secret-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+            border-radius: 15px;
+            overflow-y: auto;
+            text-align: left;
+            -webkit-overflow-scrolling: touch;
+            z-index: 1;
+        }
+
+        .secret-content p.love-letter-text {
+            color: #e2e8f0;
+            font-size: 0.98rem;
+            line-height: 1.7;
+            white-space: pre-line;
+            margin-bottom: 0;
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            touch-action: none;
+            z-index: 2;
+            transition: opacity 0.5s ease;
+        }
+
+        /* Gallery Styles */
+        .gallery-title {
+            color: var(--accent-gold);
+            font-size: 1.3rem;
+            margin-top: 20px;
+            margin-bottom: 15px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+        }
+
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .media-item {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #0f131c;
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .media-item:active {
+            transform: scale(0.97);
+        }
+
+        .media-item img, .media-item video {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            display: block;
+            border-radius: 12px;
+        }
+
+        .media-caption {
+            padding: 8px;
+            font-size: 0.85rem;
+            color: #cbd5e0;
+            background: #121620;
+            text-align: center;
+        }
+
+        /* Fullscreen Lightbox / Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(8px);
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .modal-content-wrapper {
+            max-width: 90vw;
+            max-height: 80vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal img, .modal video {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            object-fit: contain;
+        }
+
+        .modal-caption {
+            margin-top: 15px;
+            color: var(--accent-gold);
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 10000;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Main Personal Header -->
+        <h1 class="main-header">Welcome my lovely baby @Nicole ❤️</h1>
+        <div class="sub-header">From your darling Arnold</div>
+
+        <!-- STEP 1: Passcode Lock -->
+        <div id="step-lock">
+            <p>Answer our secret memory to unlock your surprise:</p>
+            <input type="text" id="answer-input" placeholder="Enter answer..." autocomplete="off">
+            <button onclick="checkAnswer()">Unlock My Gift ✨</button>
+            <p id="error" class="error-msg">Hmm, that's not it! Try again my love ❤</p>
+        </div>
+
+        <!-- STEP 2: Reveal & Gallery -->
+        <div id="step-reveal" class="hidden">
+            <p>Scratch off the foil below to unlock & read your special letter!</p>
+
+            <div class="scratch-container">
+                <div class="secret-content">
+                    <p class="love-letter-text">My lovely Nicole ❤️,
+
+More than four years… and somehow, I still find myself grateful that life brought you into my world. Through the good days, the difficult moments, the laughter, the disagreements, and everything in between, you have continued to love me and stand by me.
+
+Thank you for choosing me, not just once, but over and over again. Thank you for your patience, your care, your understanding, and for loving me even when I wasn’t the easiest person to love.
+
+These four years have taught me that true love isn’t about having a perfect relationship; it’s about two people who keep choosing each other despite the imperfections. And Nicole, I choose you. ❤️
+
+I may not always have the perfect words or know exactly how to show you how much you mean to me, but please know that your place in my heart is special. You have been a beautiful part of my life for more than four years, and I pray we get to create many more memories, dreams, and beautiful years together.
+
+Thank you for loving me for all this time, my love. ❤️
+I appreciate you. I cherish you. And most importantly, I love you. 🥹❤️
+
+Here’s to us, Nicole — more love, more laughter, more growth, and many more years together. 🥂❤️</p>
+                </div>
+                <canvas id="scratch-canvas"></canvas>
+            </div>
+
+            <!-- PHOTOS & VIDEOS GALLERY -->
+            <h3 class="gallery-title">Our Favorite Moments 📸</h3>
+            
+            <div class="media-grid">
+                <div class="media-item" onclick="openMedia('Pho1.jpg', 'image', 'Sweet Memory 💕')">
+                    <img src="Pho1.jpg" alt="Our Memory">
+                    <div class="media-caption">Sweet Memory 💕</div>
+                </div>
+
+                <div class="media-item" onclick="openMedia('Pho2.jpg', 'image', 'Unforgettable Night ✨')">
+                    <img src="Pho2.jpg" alt="Our Memory">
+                    <div class="media-caption">Unforgettable Night ✨</div>
+                </div>
+
+                <div class="media-item" onclick="openMedia('Pho3.jpg', 'image', 'My Favorite Smile 😊')">
+                    <img src="Pho3.jpg" alt="Our Memory">
+                    <div class="media-caption">My Favorite Smile 😊</div>
+                </div>
+
+                <div class="media-item" onclick="openMedia('Pho4.jpg', 'image', 'Best Times 💖')">
+                    <img src="Pho4.jpg" alt="Our Memory">
+                    <div class="media-caption">Best Times 💖</div>
+                </div>
+
+                <div class="media-item" onclick="openMedia('Pho5.jpg', 'image', 'Forever & Always 🥰')">
+                    <img src="Pho5.jpg" alt="Our Memory">
+                    <div class="media-caption">Forever & Always 🥰</div>
+                </div>
+
+                <div class="media-item" onclick="openMedia('Video1.mp4', 'video', 'Us Together 🎥')">
+                    <video preload="metadata">
+                        <source src="Video1.mp4" type="video/mp4">
+                    </video>
+                    <div class="media-caption">Us Together 🎥</div>
+                </div>
+
+                <div class="media-item" onclick="openMedia('Vodeo2.mp4', 'video', 'Special Moments ✨')">
+                    <video preload="metadata">
+                        <source src="Vodeo2.mp4" type="video/mp4">
+                    </video>
+                    <div class="media-caption">Special Moments ✨</div>
+                </div>
+
+                <div class="media-item" onclick="openMedia('Video4.mp4', 'video', 'Memory Lane 🎬')">
+                    <video preload="metadata">
+                        <source src="Video4.mp4" type="video/mp4">
+                    </video>
+                    <div class="media-caption">Memory Lane 🎬</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Fullscreen Modal View -->
+    <div id="media-modal" class="modal" onclick="closeMedia()">
+        <span class="close-btn" onclick="closeMedia()">&times;</span>
+        <div class="modal-content-wrapper" onclick="event.stopPropagation()">
+            <div id="modal-body"></div>
+        </div>
+        <div id="modal-caption" class="modal-caption"></div>
+    </div>
+
+    <script>
+        const CORRECT_ANSWER = "first kiss"; 
+
+        function checkAnswer() {
+            const userInput = document.getElementById('answer-input').value.trim().toLowerCase();
+            const errorMsg = document.getElementById('error');
+
+            if (userInput === CORRECT_ANSWER.toLowerCase()) {
+                document.getElementById('step-lock').classList.add('hidden');
+                document.getElementById('step-reveal').classList.remove('hidden');
+                initScratchCard();
+            } else {
+                errorMsg.style.display = 'block';
+            }
+        }
+
+        function initScratchCard() {
+            const canvas = document.getElementById('scratch-canvas');
+            const ctx = canvas.getContext('2d');
+            const container = canvas.parentElement;
+
+            canvas.width = container.offsetWidth;
+            canvas.height = container.offsetHeight;
+
+            ctx.fillStyle = '#8a94a6';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#161b26';
+            ctx.font = 'bold 16px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('✨ Touch & Scratch to Reveal ✨', canvas.width / 2, canvas.height / 2);
+
+            let isDrawing = false;
+            let scratchCount = 0;
+
+            function scratch(e) {
+                if (!isDrawing) return;
+                
+                const rect = canvas.getBoundingClientRect();
+                const x = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left;
+                const y = (e.clientY || (e.touches && e.touches[0].clientY)) - rect.top;
+
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.beginPath();
+                ctx.arc(x, y, 35, 0, Math.PI * 2);
+                ctx.fill();
+
+                scratchCount++;
+                if (scratchCount > 15) {
+                    canvas.style.opacity = '0';
+                    setTimeout(() => {
+                        canvas.style.display = 'none';
+                    }, 500);
+                }
+            }
+
+            canvas.addEventListener('mousedown', (e) => { isDrawing = true; scratch(e); });
+            canvas.addEventListener('mousemove', scratch);
+            canvas.addEventListener('mouseup', () => isDrawing = false);
+
+            canvas.addEventListener('touchstart', (e) => { isDrawing = true; scratch(e); });
+            canvas.addEventListener('touchmove', scratch);
+            canvas.addEventListener('touchend', () => isDrawing = false);
+        }
+
+        // Fullscreen Photo & Video Modal Logic
+        function openMedia(src, type, caption) {
+            const modal = document.getElementById('media-modal');
+            const modalBody = document.getElementById('modal-body');
+            const modalCaption = document.getElementById('modal-caption');
+
+            if (type === 'image') {
+                modalBody.innerHTML = `<img src="${src}" alt="Full view">`;
+            } else if (type === 'video') {
+                modalBody.innerHTML = `<video src="${src}" controls autoplay playsinline></video>`;
+            }
+
+            modalCaption.innerText = caption;
+            modal.style.display = 'flex';
+        }
+
+        function closeMedia() {
+            const modal = document.getElementById('media-modal');
+            const modalBody = document.getElementById('modal-body');
+            modalBody.innerHTML = ''; 
+            modal.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
